@@ -1,0 +1,1 @@
+For creating a TTL based on an index - db.<collection_name>.createIndex( {"expireAt": 1}, {expireAfterSeconds: 0} )
