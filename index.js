@@ -30,7 +30,6 @@ MongoClient.connect(DATABASE_URL,{useUnifiedTopology: true})
      * 
      *  sample response
      *  {
-     *      "message": "INSERT SUCCESS",
      *      "uniqueUrl": "cHiJ4SD",
      *      "expireAt": "2021-03-20T04:24:32.292Z"
      *  }
@@ -45,7 +44,7 @@ MongoClient.connect(DATABASE_URL,{useUnifiedTopology: true})
         messagesCollection.insertOne(newMessageDocument)
         .then(result => {
             console.log("INSERT SUCCESS!")
-            return res.status(201).send({ message: "INSERT SUCCESS", uniqueUrl : uuid, expireAt})
+            return res.status(201).send({ uniqueUrl : uuid, expireAt})
         }).catch(error => {
             console.log("INSERT FAILED!")
             return res.status(503).send(error)
