@@ -44,8 +44,10 @@ MongoClient.connect(DATABASE_URL,{useUnifiedTopology: true})
         const newMessageDocument = {...req.body, expireAt, insertDate, _id: uuid}
         messagesCollection.insertOne(newMessageDocument)
         .then(result => {
+            console.log("INSERT SUCCESS!")
             return res.status(201).send({ message: "INSERT SUCCESS", uniqueUrl : uuid, expireAt})
         }).catch(error => {
+            console.log("INSERT FAILED!")
             return res.status(503).send(error)
         })
     })
@@ -66,9 +68,12 @@ MongoClient.connect(DATABASE_URL,{useUnifiedTopology: true})
         const uuid = req.params.uuid
         messagesCollection.findOne({_id: uuid})
         .then(result => {
-            if (result === null) 
+            if (result === null) {
+                console.log("RECORD NOT FOUND!")
                 return res.status(404).end()
+            }
             else
+                console.log("RECORD FOUND!")
                 return res.status(302).send(result)
         }).catch(err => {
             console.log(err)
@@ -79,14 +84,6 @@ MongoClient.connect(DATABASE_URL,{useUnifiedTopology: true})
     console.log(err)
 })
 
-
-app.get("/",(req,res) => {
-    return res.send({name: "hello",uuid: nanoid(10)})
-})
-
-app.get("/:id",(req,res) => {
-    return res.send({ id: req.params.id })
-})
 
 app.listen(process.env.PORT || PORT, () => {
     console.log(`Backend is running on port ${process.env.PORT || PORT}`)
