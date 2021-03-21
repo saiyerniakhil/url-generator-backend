@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const { nanoid } = require("nanoid");
+const cors = require("cors")
 const MongoClient = require('mongodb').MongoClient
 
 const DB_USERNAME = process.env.DB_USERNAME
@@ -11,6 +12,7 @@ const PORT = 8082
 const DATABASE_URL = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@cluster0.yqxu2.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
 
 const app = express()
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }));
 
